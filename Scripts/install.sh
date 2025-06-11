@@ -202,6 +202,14 @@ EOF
     else
         echo -e "\033[0;33m[SKIP]\033[0m setup_mysql.sh no encontrado, saltando configuración de MySQL..."
     fi
+    
+    # Configure Sober with optimized settings
+    echo -e "\n\033[0;32m[Sober]\033[0m Configurando Sober con ajustes optimizados..."
+    if [ -f "${scrDir}/configure_sober.sh" ]; then
+        "${scrDir}/configure_sober.sh"
+    else
+        echo -e "\033[0;33m[SKIP]\033[0m configure_sober.sh no encontrado, saltando configuración de Sober..."
+    fi
 fi
 
 #------------------------#

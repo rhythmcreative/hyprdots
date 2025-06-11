@@ -38,6 +38,11 @@ declare -a AUR_APPS=(
     "ark"                       # KDE file archiver
 )
 
+# Define Flatpak applications to install
+declare -a FLATPAK_APPS=(
+    "io.missioncenter.MissionCenter"  # System monitor application
+)
+
 # Warp terminal installation function
 install_warp() {
     echo "[INFO] Installing Warp Terminal..."
@@ -208,6 +213,40 @@ install_bg_sddm() {
     fi
 }
 
+# Function to install Flatpak applications
+install_flatpak_apps() {
+    echo "[INFO] Installing Flatpak applications..."
+    
+    # Check if flatpak is installed
+    if ! command -v flatpak &> /dev/null; then
+        echo "[ERROR] Flatpak is not installed!"
+        echo "[INFO] Installing Flatpak..."
+        sudo pacman -S flatpak --noconfirm --needed
+        
+        if [ $? -ne 0 ]; then
+            echo "[ERROR] Failed to install Flatpak"
+            return 1
+        fi
+    fi
+    
+    # Add Flathub repository if not already added
+    echo "[INFO] Adding Flathub repository..."
+    flatpak remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo
+    
+    # Install Flatpak applications
+    for app in "${FLATPAK_APPS[@]}"; do
+        echo "[INSTALLING] $app (Flatpak)"
+        flatpak install flathub "$app" -y
+        
+        if [ $? -eq 0 ]; then
+            echo "[SUCCESS] $app installed successfully!"
+        else
+            echo "[ERROR] Failed to install $app"
+        fi
+        echo ""
+    done
+}
+
 # Configure dolphin as default file manager
 configure_dolphin() {
     echo "[INFO] Configuring Dolphin as default file manager..."
@@ -280,6 +319,9 @@ install_applications() {
     
     # Install BG-SDDM
     install_bg_sddm
+    
+    # Install Flatpak applications
+    install_flatpak_apps
     
     # Configure Dolphin as default file manager
     configure_dolphin
