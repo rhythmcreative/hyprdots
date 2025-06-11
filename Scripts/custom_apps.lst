@@ -1,4 +1,7 @@
 # --------------------------------------------------- // System
+git                                                    # version control system
+nano                                                   # simple text editor
+vim                                                    # advanced text editor
 # downgrade                                            # downgrade packages
 # trash-cli-git                                        # cli to manage trash files
 # libinput-gestures                                    # actions touchpad gestures using libinput
