@@ -1,36 +1,212 @@
-###### *<div align="right"><sub>// design by t2</sub></div>*
-<div align = center>
-    <a href="https://discord.gg/AYbJ9MJez7">
-<img alt="Dynamic JSON Badge" src="https://img.shields.io/badge/dynamic/json?url=https%3A%2F%2Fdiscordapp.com%2Fapi%2Finvites%2FmT5YqjaJFh%3Fwith_counts%3Dtrue&query=%24.approximate_member_count&suffix=%20members&style=for-the-badge&logo=discord&logoSize=auto&label=The%20HyDe%20Project&labelColor=ebbcba&color=c79bf0">
-    </a>
-</div>
+# RhythmCreative's HyprDots 🚀
 
+---
 
-<!--
-<img alt="Dynamic JSON Badge" src="https://img.shields.io/badge/dynamic/json?url=https%3A%2F%2Fdiscordapp.com%2Fapi%2Finvites%2FmT5YqjaJFh%3Fwith_counts%3Dtrue&query=%24.approximate_member_count&suffix=%20members&style=for-the-badge&logo=discord&logoSize=auto&label=The%20HyDe%20Project&labelColor=ebbcba&color=c79bf0">
+## 🔧 Troubleshooting
 
-<img alt="Dynamic JSON Badge" src="https://img.shields.io/badge/dynamic/json?url=https%3A%2F%2Fdiscordapp.com%2Fapi%2Finvites%2FmT5YqjaJFh%3Fwith_counts%3Dtrue&query=%24.approximate_presence_count&suffix=%20online&style=for-the-badge&logo=discord&logoSize=auto&label=The%20HyDe%20Project&labelColor=ebbcba&color=c79bf0">
+### Common Issues
 
+**SDDM Theme Not Applied:**
+```bash
+# Verify SDDM configuration
+sudo cat /etc/sddm.conf
+sudo systemctl restart sddm
+```
+
+**Dolphin Not Set as Default:**
+```bash
+# Manually set Dolphin as default
+xdg-mime default org.kde.dolphin.desktop inode/directory
+```
+
+**Missing Applications:**
+```bash
+# Re-run custom apps installation
+cd ~/HyDE/Scripts
+./install_custom_apps.sh
+```
+
+**System Info Not Showing (fastfetch):**
+```bash
+# Install fastfetch if missing
+yay -S fastfetch
+```
+
+### 📦 Dependencies
+
+This fork automatically installs:
+- **Base HyDE dependencies**: All original requirements
+- **AUR Helper**: yay (if not present)
+- **Additional packages**: As listed in custom applications
+- **Theme dependencies**: Qt5/Qt6, KDE components
+
+---
+
+## 🤝 Contributing
+
+This is a personal fork, but contributions are welcome! 
+
+**Ways to contribute:**
+- 🐛 Report bugs or issues
+- 💡 Suggest new applications or improvements
+- 🔧 Submit fixes or enhancements
+- 📝 Improve documentation
+
+**Please note:** This fork prioritizes personal workflow optimization, so not all suggestions may be incorporated.
+
+---
+
+## 💬 Contact & Links
+
+- **Personal Repository**: [rhythmcreative/hyprdots](https://github.com/rhythmcreative/hyprdots)
+- **Original HyDE Project**: [prasanthrangan/hyprdots](https://github.com/prasanthrangan/hyprdots)
+- **New HyDE Project**: [Hyde-project/hyde](https://github.com/Hyde-project/hyde)
+
+---
+
+## ⚖️ License
+
+This project maintains the same license as the original HyDE project. See [LICENSE](LICENSE) for details.
+
+---
+
+## 🚀 Changelog
+
+### Recent Updates
+- **fastfetch Integration**: Replaced pokemon-colorscripts with modern system info
+- **SDDM Astronaut Theme**: Automatic installation and configuration
+- **Enhanced Dolphin Setup**: Automatic default file manager configuration
+- **Tela Circle Icons**: Beautiful circular icon theme included
+- **Improved Scripts**: Better error handling and user feedback
+- **Extended App Suite**: Additional development and productivity applications
+
+---
 
 <div align="center">
-
-![hyde_banner](https://raw.githubusercontent.com/prasanthrangan/hyprdots/main/Source/assets/hyde_banner.png)
-
-<br>
--->
-<div align="center">
-
-![hyde_banner](https://raw.githubusercontent.com/prasanthrangan/hyprdots/main/Source/assets/hyde_banner.png)
-
-<br>
-
- <div>
-<h1>  <strong align="center" >⚠️ Deprecation Notice:</strong><br> </h1>
-   <h3> This repository is not maintained anymore. <br>
-    Please refer to <strong><a href="https://github.com/Hyde-project/hyde" style="color: #d35400; text-decoration: underline;">Hyde-project/hyde</a> </strong>for the latest updates and contributions.
-This is for personal use</h3>
+  <h3>✨ Made with ❤️ by RhythmCreative ✨</h3>
+  <p>Based on the amazing <a href="https://github.com/prasanthrangan/hyprdots">HyDE project</a> by prasanthrangan</p>
 </div>
 
+<div align="center">
+  <img src="https://img.shields.io/badge/Arch-Linux-1793D1?style=for-the-badge&logo=arch-linux&logoColor=white" alt="Arch Linux"/>
+  <img src="https://img.shields.io/badge/Hyprland-WM-blue?style=for-the-badge" alt="Hyprland"/>
+  <img src="https://img.shields.io/badge/Status-Active-green?style=for-the-badge" alt="Status"/>
+</div>
+
+<div align="center">
+  <h2>✨ Personal Hyprland Dotfiles & Rice Configuration ✨</h2>
+  <p>A customized and enhanced version of HyDE (HyprDots) tailored for personal use</p>
+</div>
+
+---
+
+## 🎯 About This Repository
+
+This is my personal fork and customization of the original [HyDE project](https://github.com/prasanthrangan/hyprdots), featuring enhanced functionality, additional applications, and improved automation scripts.
+
+### 🔥 Key Enhancements
+
+- **🚀 Custom Application Suite**: Curated selection of development and productivity apps
+- **🎨 SDDM Astronaut Theme**: Automatically configured beautiful login screen
+- **📁 Dolphin Integration**: KDE file manager with automatic configuration
+- **🔧 Enhanced Automation**: Improved installation scripts with better error handling
+- **💫 Fastfetch Integration**: Modern system information display (replacing pokemon-colorscripts)
+- **🎭 Tela Circle Icons**: Beautiful circular icon theme included
+
+### 💡 What Makes This Different?
+
+- **Personal Optimization**: Tailored specifically for my workflow and preferences
+- **Enhanced Scripts**: Improved installation and configuration automation
+- **Additional Apps**: Extended application list for development and daily use
+- **Better UX**: Streamlined setup process with automatic theme configuration
+
+---
+
+## 🚀 Installation (Personal Fork)
+
+This fork includes enhanced installation scripts with additional applications and features.
+
+### Prerequisites
+- Arch Linux (minimal install recommended)
+- Internet connection
+- Git and base-devel packages
+
+### Quick Start
+
+```bash
+# Install prerequisites
+pacman -S --needed git base-devel
+
+# Clone this personalized fork
+git clone --depth 1 https://github.com/rhythmcreative/hyprdots.git ~/HyDE
+cd ~/HyDE/Scripts
+
+# Run the main installation
+./install.sh
+
+# Install custom applications (includes all my preferred apps)
+./install_custom_apps.sh
+```
+
+### 🎨 Custom Applications Included
+
+The `install_custom_apps.sh` script includes:
+
+**Development Tools:**
+- Visual Studio Code
+- MySQL Workbench
+- VirtualBox
+
+**Productivity & Communication:**
+- Discord
+- Telegram Desktop
+- LibreOffice Fresh
+- Obsidian
+
+**Entertainment & Media:**
+- Steam
+- Crunchyroll
+- Komikku (Manga reader)
+- Ani-CLI
+
+**File Management & Utilities:**
+- Dolphin (KDE file manager - auto-configured as default)
+- Ark (KDE archiver)
+- Balena Etcher
+- LocalSend
+- ZuluCrypt
+
+**System & Theming:**
+- Tela Circle Icon Theme
+- SDDM Astronaut Theme (auto-configured)
+- NWG Displays
+- Fastfetch (system info)
+
+**Gaming & Specialized:**
+- Minecraft Launcher
+- CurseForge
+- Wootility (Wooting keyboards)
+- Warp Terminal
+
+### ⚡ Enhanced Features
+
+**Automatic Configurations:**
+- 🎭 SDDM Astronaut theme set as default login screen
+- 📁 Dolphin configured as default file manager
+- 💫 Fastfetch replaces pokemon-colorscripts for system info
+- 🎨 Tela Circle icons ready to use
+
+**Improved Scripts:**
+- Better error handling and user feedback
+- Automatic dependency resolution
+- Configuration verification
+- Backup and restore functionality
+
+---
+
+## 🎯 Original HyDE Installation
+
+For the original HyDE experience, you can still use the standard installation:
 
 <!--
 
