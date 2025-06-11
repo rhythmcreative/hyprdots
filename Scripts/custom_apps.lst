@@ -42,6 +42,7 @@ curseforge                                             # minecraft mod manager
 virtualbox                                             # virtualization software
 komikku                                                # manga reader
 libreoffice-fresh                                      # office suite
+mysql                                                  # mysql server
 mysql-workbench                                        # mysql database tool
 obsidian                                               # note-taking app
 wootility                                              # wooting keyboard utility

@@ -303,6 +303,18 @@ read -r response
 case $response in
     [yY][eE][sS]|[yY])
         install_applications
+        
+        # Configure MySQL if it was installed
+        if command -v mysql &> /dev/null && [[ " ${selected_apps[*]} " =~ " mysql " ]]; then
+            echo "[INFO] MySQL detected, configuring with admin password..."
+            if [[ -f "$(dirname "$0")/mysql_quick_setup.sh" ]]; then
+                source "$(dirname "$0")/mysql_quick_setup.sh"
+                setup_mysql_quick
+                echo "[INFO] MySQL configured with username: root, password: admin"
+            else
+                echo "[WARNING] MySQL setup script not found. Run './setup_mysql.sh' manually."
+            fi
+        fi
         ;;
     *)
         echo "[INFO] Installation cancelled by user."
@@ -311,4 +323,8 @@ case $response in
 esac
 
 echo "[DONE] Custom applications installation script completed!"
+echo "[INFO] If you installed MySQL, it's configured with:"
+echo "       - Server: localhost:3306"
+echo "       - Username: root"
+echo "       - Password: admin"
 
