@@ -49,12 +49,6 @@ zulucrypt                                              # encryption utility
 ani-cli                                                # anime streaming CLI
 minecraft-launcher                                     # official minecraft launcher
 
-# --------------------------------------------------- // Flatpak Apps
-io.gitlab.theevilskeleton.Upscaler                     # image upscaler
-com.github.unrud.VideoDownloader                       # video downloader
-org.gnome.eog                                          # image viewer
-com.github.rafostar.Clapper                           # video player
-org.vinegarhq.Sober                                    # roblox client
 
 # --------------------------------------------------- // Special Installs
 # warp-terminal                                        # installed via custom script
