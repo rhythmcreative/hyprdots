@@ -33,6 +33,9 @@ declare -a AUR_APPS=(
     "ani-cli"                   # Anime streaming CLI
     "minecraft-launcher"        # Official Minecraft launcher
     "warp-terminal"             # Modern terminal with AI features
+    "tela-circle-icon-theme"    # Modern circular icon theme
+    "dolphin"                   # KDE file manager
+    "ark"                       # KDE file archiver
 )
 
 # Warp terminal installation function
@@ -135,7 +138,29 @@ Current=sddm-astronaut-theme
 MaximumUid=60513
 MinimumUid=1000
 EOF
-            echo "[SUCCESS] SDDM Astronaut theme installed successfully!"
+            
+            # Configure SDDM to use the astronaut theme as default
+            echo "[INFO] Configuring SDDM to use astronaut theme as default..."
+            sudo mkdir -p /etc/sddm.conf.d
+            sudo tee /etc/sddm.conf.d/theme.conf > /dev/null << EOF
+[Theme]
+Current=sddm-astronaut-theme
+EOF
+            
+            # Also update main sddm.conf if it exists
+            if [ -f /etc/sddm.conf ]; then
+                echo "[INFO] Updating existing /etc/sddm.conf..."
+                sudo sed -i '/^Current=/d' /etc/sddm.conf
+                sudo sed -i '/^\[Theme\]/a Current=sddm-astronaut-theme' /etc/sddm.conf
+            else
+                echo "[INFO] Creating /etc/sddm.conf..."
+                sudo tee /etc/sddm.conf > /dev/null << EOF
+[Theme]
+Current=sddm-astronaut-theme
+EOF
+            fi
+            
+            echo "[SUCCESS] SDDM Astronaut theme installed and configured as default!"
         else
             echo "[ERROR] Failed to copy theme files"
         fi
@@ -144,6 +169,29 @@ EOF
         rm -rf sddm-astronaut-theme
     else
         echo "[ERROR] Failed to clone SDDM Astronaut theme repository"
+    fi
+}
+
+# Configure dolphin as default file manager
+configure_dolphin() {
+    echo "[INFO] Configuring Dolphin as default file manager..."
+    
+    # Check if dolphin and xdg-utils are installed
+    if command -v dolphin >/dev/null 2>&1 && command -v xdg-mime >/dev/null 2>&1; then
+        echo "[INFO] Setting Dolphin as default file manager..."
+        xdg-mime default org.kde.dolphin.desktop inode/directory
+        
+        # Verify the setting
+        current_default=$(xdg-mime query default "inode/directory")
+        echo "[INFO] Current default file manager: $current_default"
+        
+        if [[ "$current_default" == "org.kde.dolphin.desktop" ]]; then
+            echo "[SUCCESS] Dolphin configured as default file manager!"
+        else
+            echo "[WARNING] Failed to set Dolphin as default file manager"
+        fi
+    else
+        echo "[WARNING] Dolphin or xdg-utils not found, skipping configuration"
     fi
 }
 
@@ -193,6 +241,9 @@ install_applications() {
     
     # Install SDDM Astronaut Theme
     install_sddm_astronaut
+    
+    # Configure Dolphin as default file manager
+    configure_dolphin
     
     echo ""
     echo "==========================================="
