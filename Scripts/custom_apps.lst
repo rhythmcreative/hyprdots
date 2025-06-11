@@ -1,0 +1,50 @@
+# --------------------------------------------------- // System
+# downgrade                                            # downgrade packages
+# trash-cli-git                                        # cli to manage trash files
+# libinput-gestures                                    # actions touchpad gestures using libinput
+# gestures                                             # gui for libinput-gestures
+
+# --------------------------------------------------- // Theming
+tela-circle-icon-theme                                 # circular icon theme
+
+# --------------------------------------------------- // Dependencies
+xdg-desktop-portal-gtk                                 # xdg desktop portal using gtk
+# emote                                                # emoji picker gtk3
+
+# --------------------------------------------------- // Gaming
+steam                                                  # gaming platform
+gamemode                                               # daemon and library for game optimisations
+mangohud                                               # system performance overlay
+# gamescope                                            # micro-compositor for gaming
+
+# --------------------------------------------------- // Music
+cava                                                   # audio visualizer
+spotify                                                # proprietary music streaming service
+spicetify-cli                                          # cli to customize spotify client
+
+# --------------------------------------------------- // Apps
+# neovim                                               # vim based text editor
+
+# --------------------------------------------------- // Custom Apps
+balena-etcher                                          # flash OS images to SD cards
+localsend                                              # cross-platform file sharing
+nwg-displays                                           # output management utility for wayland
+discord                                                # voice and text chat for gamers
+# steam                                                # already in gaming section
+twitter                                                # twitter client
+chromium                                               # open-source web browser
+telegram-desktop                                       # telegram messaging app
+crunchyroll                                            # anime streaming service
+curseforge                                             # minecraft mod manager
+virtualbox                                             # virtualization software
+komikku                                                # manga reader
+libreoffice-fresh                                      # office suite
+mysql-workbench                                        # mysql database tool
+obsidian                                               # note-taking app
+wootility                                              # wooting keyboard utility
+zulucrypt                                              # encryption utility
+ani-cli                                                # anime streaming CLI
+minecraft-launcher                                     # official minecraft launcher
+
+# --------------------------------------------------- // Special Installs
+# warp-terminal                                        # installed via custom script
