@@ -32,32 +32,67 @@ declare -a AUR_APPS=(
     "zulucrypt"                 # Encryption utility
     "ani-cli"                   # Anime streaming CLI
     "minecraft-launcher"        # Official Minecraft launcher
+    "warp-terminal"             # Modern terminal with AI features
 )
 
 # Warp terminal installation function
 install_warp() {
     echo "[INFO] Installing Warp Terminal..."
     
-    # Download Warp package
-    cd /tmp
-    echo "[DOWNLOAD] Downloading Warp Terminal package..."
-    wget -O warp-terminal.pkg.tar.xz "https://app.warp.dev/get_warp?package=pacman"
+    # Check if yay is available
+    if ! command -v yay &> /dev/null; then
+        echo "[ERROR] yay AUR helper is not installed!"
+        echo "[INFO] Please install yay first using: bash install_aur.sh"
+        return 1
+    fi
+    
+    # Try to install from AUR first
+    echo "[INFO] Attempting to install Warp Terminal from AUR..."
+    yay -S warp-terminal --noconfirm --needed
     
     if [ $? -eq 0 ]; then
-        echo "[SUCCESS] Warp package downloaded successfully"
-        echo "[INFO] Installing Warp with pacman..."
-        sudo pacman -U warp-terminal.pkg.tar.xz --noconfirm
+        echo "[SUCCESS] Warp Terminal installed successfully from AUR!"
+        return 0
+    fi
+    
+    # If AUR fails, try direct download method
+    echo "[INFO] AUR installation failed, trying direct download..."
+    cd /tmp
+    
+    # Get the actual download URL by following redirects
+    echo "[DOWNLOAD] Getting Warp Terminal download URL..."
+    download_url=$(curl -Ls -o /dev/null -w %{url_effective} "https://app.warp.dev/get_warp?package=pacman")
+    
+    if [[ "$download_url" == *.pkg.tar.* ]]; then
+        echo "[DOWNLOAD] Downloading Warp Terminal package from: $download_url"
+        wget -O warp-terminal.pkg.tar.xz "$download_url"
         
-        if [ $? -eq 0 ]; then
-            echo "[SUCCESS] Warp Terminal installed successfully!"
+        if [ $? -eq 0 ] && [ -f warp-terminal.pkg.tar.xz ]; then
+            # Verify it's actually a package file
+            file_type=$(file warp-terminal.pkg.tar.xz)
+            if [[ "$file_type" == *"compressed"* ]] || [[ "$file_type" == *"archive"* ]]; then
+                echo "[SUCCESS] Package downloaded successfully"
+                echo "[INFO] Installing Warp with pacman..."
+                sudo pacman -U warp-terminal.pkg.tar.xz --noconfirm
+                
+                if [ $? -eq 0 ]; then
+                    echo "[SUCCESS] Warp Terminal installed successfully!"
+                else
+                    echo "[ERROR] Failed to install Warp Terminal package"
+                fi
+            else
+                echo "[ERROR] Downloaded file is not a valid package archive"
+                echo "[INFO] File type: $file_type"
+            fi
+            
+            # Clean up
+            rm -f warp-terminal.pkg.tar.xz
         else
-            echo "[ERROR] Failed to install Warp Terminal"
+            echo "[ERROR] Failed to download Warp Terminal package"
         fi
-        
-        # Clean up
-        rm -f warp-terminal.pkg.tar.xz
     else
-        echo "[ERROR] Failed to download Warp Terminal"
+        echo "[ERROR] Could not get valid download URL for Warp Terminal"
+        echo "[INFO] You may need to install Warp Terminal manually from https://app.warp.dev/"
     fi
 }
 
@@ -124,8 +159,6 @@ show_apps_list() {
         ((counter++))
     done
     
-    printf "%2d. %s\n" $counter "warp-terminal (from web)"
-    ((counter++))
     printf "%2d. %s\n" $counter "sddm-astronaut-theme (from GitHub)"
     echo "==========================================="
 }
@@ -156,8 +189,7 @@ install_applications() {
         echo ""
     done
     
-    # Install Warp Terminal
-    install_warp
+    # Note: Warp Terminal is now installed via AUR in the main loop above
     
     # Install SDDM Astronaut Theme
     install_sddm_astronaut
