@@ -172,6 +172,42 @@ EOF
     fi
 }
 
+# BG-SDDM installation function
+install_bg_sddm() {
+    echo "[INFO] Installing BG-SDDM (SDDM Background Manager with GIFs support)..."
+    
+    # Clone the repository
+    cd /tmp
+    echo "[DOWNLOAD] Cloning BG-SDDM repository..."
+    git clone https://github.com/rhythmcreative/BG-SDDM.git
+    
+    if [ $? -eq 0 ]; then
+        echo "[SUCCESS] Repository cloned successfully"
+        
+        # Navigate to the repository directory
+        cd BG-SDDM
+        
+        # Make the install script executable and run it
+        echo "[INFO] Making install script executable..."
+        chmod +x install.sh
+        
+        echo "[INFO] Running installation script..."
+        ./install.sh
+        
+        if [ $? -eq 0 ]; then
+            echo "[SUCCESS] BG-SDDM installed successfully!"
+        else
+            echo "[ERROR] Failed to install BG-SDDM"
+        fi
+        
+        # Clean up
+        cd /tmp
+        rm -rf BG-SDDM
+    else
+        echo "[ERROR] Failed to clone BG-SDDM repository"
+    fi
+}
+
 # Configure dolphin as default file manager
 configure_dolphin() {
     echo "[INFO] Configuring Dolphin as default file manager..."
@@ -241,6 +277,9 @@ install_applications() {
     
     # Install SDDM Astronaut Theme
     install_sddm_astronaut
+    
+    # Install BG-SDDM
+    install_bg_sddm
     
     # Configure Dolphin as default file manager
     configure_dolphin

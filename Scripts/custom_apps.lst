@@ -48,3 +48,4 @@ minecraft-launcher                                     # official minecraft laun
 
 # --------------------------------------------------- // Special Installs
 # warp-terminal                                        # installed via custom script
+bg-sddm                                               # SDDM background manager with GIFs support
