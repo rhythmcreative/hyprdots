@@ -152,6 +152,51 @@ EOF
     # Install python-webcolors package
     echo -e "\n\033[0;32m[python-webcolors]\033[0m Installing python-webcolors..."
     sudo pacman -S python-webcolors --noconfirm || echo -e "\033[0;33m[SKIP]\033[0m python-webcolors may already be installed"
+    
+    #------------------------------#
+    # detect ASUS laptop and ROG Control Center #
+    #------------------------------#
+    echo -e "\n\033[0;32m[ASUS Detection]\033[0m Checking for ASUS hardware..."
+    
+    # Check if it's an ASUS system
+    if sudo dmidecode -s system-manufacturer 2>/dev/null | grep -i "asus" >/dev/null 2>&1 || \
+       sudo dmidecode -s system-product-name 2>/dev/null | grep -i "rog\|tuf\|zenbook\|vivobook\|asus" >/dev/null 2>&1; then
+        
+        echo -e "\033[0;32m✓ ASUS system detected!\033[0m"
+        echo -e "\033[0;33mDetected ASUS hardware. ROG Control Center provides:\033[0m"
+        echo -e "  • RGB lighting control"
+        echo -e "  • Fan curve management"
+        echo -e "  • Performance profiles"
+        echo -e "  • Aura sync support"
+        echo ""
+        
+        # Ask user if they want to install ROG Control Center
+        while true; do
+            read -p "Do you want to install ROG Control Center? [Y/n]: " rog_choice
+            case ${rog_choice:-Y} in
+                [Yy]* )
+                    echo -e "\033[0;32m[ROG Control Center]\033[0m Installing ROG Control Center..."
+                    yay -S rog-control-center --noconfirm
+                    if [ $? -eq 0 ]; then
+                        echo -e "\033[0;32m✓ ROG Control Center installed successfully\033[0m"
+                        echo -e "\033[0;33mTip: You can access it from the applications menu or run 'rog-control-center'\033[0m"
+                    else
+                        echo -e "\033[0;31m✗ Error installing ROG Control Center\033[0m"
+                    fi
+                    break
+                    ;;
+                [Nn]* )
+                    echo -e "\033[0;33m[SKIP]\033[0m ROG Control Center installation skipped"
+                    break
+                    ;;
+                * )
+                    echo "Please answer yes (Y/y) or no (N/n)"
+                    ;;
+            esac
+        done
+    else
+        echo -e "\033[0;33m[INFO]\033[0m Non-ASUS system detected, skipping ROG Control Center"
+    fi
 fi
 
 #---------------------------#
