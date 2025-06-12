@@ -148,6 +148,10 @@ EOF
     rm "${scrDir}/install_pkg.lst"
     # Invoke the custom applications installer
     "${scrDir}/install_custom_apps.sh"
+    
+    # Install python-webcolors package
+    echo -e "\n\033[0;32m[python-webcolors]\033[0m Installing python-webcolors..."
+    sudo pacman -S python-webcolors --noconfirm || echo -e "\033[0;33m[SKIP]\033[0m python-webcolors may already be installed"
 fi
 
 #---------------------------#
@@ -211,14 +215,6 @@ if [ ${flg_Install} -eq 1 ] && [ ${flg_Restore} -eq 1 ]; then
 EOF
 
     "${scrDir}/install_pst.sh"
-    
-    # Configure MySQL with localhost user and admin password
-    echo -e "\n\033[0;32m[MySQL]\033[0m Configurando MySQL con usuario localhost y contraseña admin..."
-    if [ -f "${scrDir}/setup_mysql.sh" ]; then
-        "${scrDir}/setup_mysql.sh"
-    else
-        echo -e "\033[0;33m[SKIP]\033[0m setup_mysql.sh no encontrado, saltando configuración de MySQL..."
-    fi
     
     # Configure Sober with optimized settings
     echo -e "\n\033[0;32m[Sober]\033[0m Configurando Sober con ajustes optimizados..."
