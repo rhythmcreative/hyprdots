@@ -1,0 +1,34 @@
+# Hyperfluent-arch GRUB Theme Information
+# =======================================
+
+## Theme Name: hyperfluent-arch
+## Description: Modern, sleek GRUB theme with Arch Linux styling
+## Compatible with: GRUB 2.x, LUKS encryption
+
+## Download Sources (try in order):
+# Primary source
+https://github.com/rhythmcreative/hyperfluent-grub-theme/archive/refs/heads/main.tar.gz
+
+# Alternative sources
+https://github.com/saber-linux/hyperfluent-grub-theme/archive/refs/heads/main.tar.gz
+https://github.com/prasanthrangan/hyprdots/raw/main/Source/arcs/Grub_themes/hyperfluent-arch.tar.gz
+https://github.com/ChrisTitusTech/hyprland-titus/raw/main/grub-themes/hyperfluent-arch.tar.gz
+
+## Manual Installation:
+# If automatic download fails, you can:
+# 1. Download hyperfluent-arch.tar.gz manually from any working source
+# 2. Place it in ~/.cache/grub-theme/
+# 3. Run the installer script again
+
+## Features:
+# - Modern UI design
+# - High resolution support (1920x1080, 1366x768, 1024x768)
+# - LUKS encryption support
+# - Automatic GRUB configuration
+# - Easy uninstall option
+
+## Usage:
+# Install: ./Scripts/install_grub_theme.sh install
+# Remove:  ./Scripts/install_grub_theme.sh uninstall
+# Help:    ./Scripts/install_grub_theme.sh --help
+

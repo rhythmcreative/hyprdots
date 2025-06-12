@@ -342,3 +342,46 @@ echo -e "\n\033[0;32m[SDDM]\033[0m Habilitando e iniciando servicio SDDM..."
 sudo systemctl enable sddm.service
 sudo systemctl start sddm.service
 echo -e "\033[0;32m[SUCCESS]\033[0m SDDM habilitado e iniciado exitosamente"
+
+#-------------------------#
+# install GRUB theme      #
+#-------------------------#
+echo -e "\n\033[0;36m┌─────────────────────────────────────────────────┐\033[0m"
+echo -e "\033[0;36m│              GRUB Theme Installation            │\033[0m"
+echo -e "\033[0;36m└─────────────────────────────────────────────────┘\033[0m"
+echo -e "\n\033[0;33m[OPTION]\033[0m ¿Deseas instalar el tema GRUB Hyperfluent-arch?"
+echo -e "\033[0;33m[INFO]\033[0m Este tema mejora la apariencia de GRUB y es compatible con LUKS"
+echo -e "\033[0;33m[INFO]\033[0m Funciona perfectamente con sistemas cifrados"
+read -p "Instalar tema GRUB? [y/N]: " grub_choice
+
+if [[ $grub_choice =~ ^[Yy]$ ]]; then
+    echo -e "\n\033[0;32m[GRUB Theme]\033[0m Instalando tema Hyperfluent-arch..."
+    if [ -f "${scrDir}/install_grub_theme.sh" ]; then
+        "${scrDir}/install_grub_theme.sh" install
+        if [ $? -eq 0 ]; then
+            echo -e "\033[0;32m[SUCCESS]\033[0m Tema GRUB instalado exitosamente"
+            echo -e "\033[0;33m[INFO]\033[0m Reinicia para ver el nuevo tema GRUB"
+        else
+            echo -e "\033[0;31m[ERROR]\033[0m Error al instalar el tema GRUB"
+        fi
+    else
+        echo -e "\033[0;31m[ERROR]\033[0m install_grub_theme.sh no encontrado"
+    fi
+else
+    echo -e "\033[0;33m[SKIP]\033[0m Instalación del tema GRUB omitida"
+    echo -e "\033[0;33m[INFO]\033[0m Puedes instalarlo más tarde con: ./Scripts/install_grub_theme.sh"
+fi
+
+#--------------#
+# Final report #
+#--------------#
+echo -e "\n\033[0;36m┌─────────────────────────────────────────────────┐\033[0m"
+echo -e "\033[0;36m│               Installation Complete             │\033[0m"
+echo -e "\033[0;36m└─────────────────────────────────────────────────┘\033[0m"
+echo -e "\n\033[0;32m[COMPLETE]\033[0m ¡Instalación de HyprDots completada!"
+echo -e "\033[0;33m[NEXT]\033[0m Reinicia tu sistema para aplicar todos los cambios"
+echo -e "\033[0;33m[INFO]\033[0m Comandos útiles después del reinicio:"
+echo -e "  - \033[0;36mhyprctl reload\033[0m: Recargar configuración de Hyprland"
+echo -e "  - \033[0;36mwaybar &\033[0m: Iniciar waybar manualmente"
+echo -e "  - \033[0;36mthemepatcher.sh\033[0m: Cambiar temas"
+echo -e "  - \033[0;36m./Scripts/install_grub_theme.sh uninstall\033[0m: Desinstalar tema GRUB"
