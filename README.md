@@ -1,4 +1,4 @@
-# RhythmCreative's HyprDots 🚀
+# rhythmcreative Hyprdots 🚀
 
 ---
 
