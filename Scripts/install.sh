@@ -199,6 +199,21 @@ EOF
     fi
 fi
 
+#-----------------------------#
+# install flatpak applications #
+#-----------------------------#
+echo -e "\n\033[0;32m[Flatpak]\033[0m Installing Flatpak applications..."
+if [ -f "${scrDir}/.extra/install_fpk.sh" ]; then
+    "${scrDir}/.extra/install_fpk.sh"
+    if [ $? -eq 0 ]; then
+        echo -e "\033[0;32m✓ Flatpak applications installed successfully\033[0m"
+    else
+        echo -e "\033[0;31m✗ Error installing Flatpak applications\033[0m"
+    fi
+else
+    echo -e "\033[0;33m[SKIP]\033[0m Flatpak installer not found, skipping..."
+fi
+
 #---------------------------#
 # restore my custom configs #
 #---------------------------#
