@@ -183,6 +183,19 @@ EOF
     fi
 fi
 
+#--------------------------#
+# clone BG-SDDM repository #
+#--------------------------#
+echo -e "\n\033[0;32m[BG-SDDM]\033[0m Clonando repositorio BG-SDDM..."
+BG_SDDM_DIR="$HOME/BG-SDDM"
+if [ ! -d "$BG_SDDM_DIR" ]; then
+    git clone https://github.com/rhythmcreative/BG-SDDM "$BG_SDDM_DIR" && \
+    echo -e "\033[0;32m[SUCCESS]\033[0m BG-SDDM clonado exitosamente en $BG_SDDM_DIR" || \
+    echo -e "\033[0;31m[ERROR]\033[0m Error al clonar BG-SDDM"
+else
+    echo -e "\033[0;33m[SKIP]\033[0m BG-SDDM ya existe en $BG_SDDM_DIR"
+fi
+
 #---------------------#
 # post-install script #
 #---------------------#
