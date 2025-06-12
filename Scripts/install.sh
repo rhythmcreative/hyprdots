@@ -202,17 +202,41 @@ fi
 #-----------------------------#
 # install flatpak applications #
 #-----------------------------#
-echo -e "\n\033[0;32m[Flatpak]\033[0m Installing Flatpak applications..."
-if [ -f "${scrDir}/.extra/install_fpk.sh" ]; then
-    "${scrDir}/.extra/install_fpk.sh"
-    if [ $? -eq 0 ]; then
-        echo -e "\033[0;32m✓ Flatpak applications installed successfully\033[0m"
-    else
-        echo -e "\033[0;31m✗ Error installing Flatpak applications\033[0m"
-    fi
-else
-    echo -e "\033[0;33m[SKIP]\033[0m Flatpak installer not found, skipping..."
-fi
+echo -e "\n\033[0;32m[Flatpak]\033[0m Flatpak applications installer found."
+echo -e "\033[0;33mFlatpak applications provide additional software like:\033[0m"
+echo -e "  • Web browsers (Firefox, Chrome)"
+echo -e "  • Media players (VLC, GNOME Videos)"
+echo -e "  • Office suites (LibreOffice)"
+echo -e "  • Development tools (VS Code, GIMP)"
+echo ""
+
+# Ask user if they want to install Flatpak applications
+while true; do
+    read -p "Do you want to install Flatpak applications? [Y/n]: " flatpak_choice
+    case ${flatpak_choice:-Y} in
+        [Yy]* )
+            echo -e "\033[0;32m[Flatpak]\033[0m Installing Flatpak applications..."
+            if [ -f "${scrDir}/.extra/install_fpk.sh" ]; then
+                "${scrDir}/.extra/install_fpk.sh"
+                if [ $? -eq 0 ]; then
+                    echo -e "\033[0;32m✓ Flatpak applications installed successfully\033[0m"
+                else
+                    echo -e "\033[0;31m✗ Error installing Flatpak applications\033[0m"
+                fi
+            else
+                echo -e "\033[0;33m[SKIP]\033[0m Flatpak installer not found, skipping..."
+            fi
+            break
+            ;;
+        [Nn]* )
+            echo -e "\033[0;33m[SKIP]\033[0m Flatpak applications installation skipped"
+            break
+            ;;
+        * )
+            echo "Please answer yes (Y/y) or no (N/n)"
+            ;;
+    esac
+done
 
 #---------------------------#
 # restore my custom configs #
