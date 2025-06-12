@@ -26,11 +26,32 @@ if pkg_installed grub && [ -f /boot/grub/grub.cfg ]; then
             sudo sed -i "/^GRUB_CMDLINE_LINUX_DEFAULT=/c\GRUB_CMDLINE_LINUX_DEFAULT=\"${gcld} nvidia_drm.modeset=1\"" /etc/default/grub
         fi
 
-        echo -e "Select grub theme:\n[1] Retroboot (dark)\n[2] Pochita (light)"
+        # Detect LUKS encryption and configure GRUB accordingly
+        if lsblk -f | grep -q "crypto_LUKS" || [ -f /etc/crypttab ]; then
+            echo -e "\033[0;32m[BOOTLOADER]\033[0m LUKS encryption detected, configuring GRUB for encrypted boot..."
+            
+            # Enable cryptodisk support
+            if ! grep -q "^GRUB_ENABLE_CRYPTODISK=y" /etc/default/grub; then
+                echo "GRUB_ENABLE_CRYPTODISK=y" | sudo tee -a /etc/default/grub
+            fi
+            
+            # Set appropriate timeout for password entry
+            sudo sed -i "/^GRUB_TIMEOUT=/c\GRUB_TIMEOUT=10" /etc/default/grub
+            sudo sed -i "/^#GRUB_TIMEOUT=/c\GRUB_TIMEOUT=10" /etc/default/grub
+            
+            # Ensure proper video mode for theme display with LUKS
+            sudo sed -i "/^GRUB_GFXPAYLOAD_LINUX=/c\GRUB_GFXPAYLOAD_LINUX=keep" /etc/default/grub
+            sudo sed -i "/^#GRUB_GFXPAYLOAD_LINUX=/c\GRUB_GFXPAYLOAD_LINUX=keep" /etc/default/grub
+            
+            echo -e "\033[0;32m[BOOTLOADER]\033[0m LUKS configuration applied for proper theme support"
+        fi
+
+        echo -e "Select grub theme:\n[1] Retroboot (dark)\n[2] Pochita (light)\n[3] Hyperfluent-arch (modern)"
         read -p " :: Press enter to skip grub theme <or> Enter option number : " grubopt
         case ${grubopt} in
             1) grubtheme="Retroboot" ;;
             2) grubtheme="Pochita" ;;
+            3) grubtheme="hyperfluent-arch" ;;
             *) grubtheme="None" ;;
         esac
 
@@ -40,11 +61,44 @@ if pkg_installed grub && [ -f /boot/grub/grub.cfg ]; then
         else
             echo -e "\033[0;32m[BOOTLOADER]\033[0m Setting grub theme // ${grubtheme}"
             sudo tar -xzf ${cloneDir}/Source/arcs/Grub_${grubtheme}.tar.gz -C /usr/share/grub/themes/
-            sudo sed -i "/^GRUB_DEFAULT=/c\GRUB_DEFAULT=saved
-            /^GRUB_GFXMODE=/c\GRUB_GFXMODE=1280x1024x32,auto
-            /^GRUB_THEME=/c\GRUB_THEME=\"/usr/share/grub/themes/${grubtheme}/theme.txt\"
-            /^#GRUB_THEME=/c\GRUB_THEME=\"/usr/share/grub/themes/${grubtheme}/theme.txt\"
-            /^#GRUB_SAVEDEFAULT=true/c\GRUB_SAVEDEFAULT=true" /etc/default/grub
+            
+            # Configure GRUB with theme settings optimized for LUKS
+            sudo sed -i "/^GRUB_DEFAULT=/c\GRUB_DEFAULT=saved" /etc/default/grub
+            sudo sed -i "/^GRUB_GFXMODE=/c\GRUB_GFXMODE=1920x1080x32,1280x1024x32,auto" /etc/default/grub
+            sudo sed -i "/^#GRUB_GFXMODE=/c\GRUB_GFXMODE=1920x1080x32,1280x1024x32,auto" /etc/default/grub
+            sudo sed -i "/^GRUB_THEME=/c\GRUB_THEME=\"/usr/share/grub/themes/${grubtheme}/theme.txt\"" /etc/default/grub
+            sudo sed -i "/^#GRUB_THEME=/c\GRUB_THEME=\"/usr/share/grub/themes/${grubtheme}/theme.txt\"" /etc/default/grub
+            sudo sed -i "/^#GRUB_SAVEDEFAULT=true/c\GRUB_SAVEDEFAULT=true" /etc/default/grub
+            
+            # Universal settings for theme compatibility
+            if ! grep -q "^GRUB_TERMINAL=" /etc/default/grub; then
+                echo "GRUB_TERMINAL=gfxterm" | sudo tee -a /etc/default/grub
+            else
+                sudo sed -i "/^GRUB_TERMINAL=/c\GRUB_TERMINAL=gfxterm" /etc/default/grub
+            fi
+
+            # Configure video settings for optimal theme display
+            sudo sed -i "/^GRUB_GFXPAYLOAD_LINUX=/c\GRUB_GFXPAYLOAD_LINUX=keep" /etc/default/grub
+            sudo sed -i "/^#GRUB_GFXPAYLOAD_LINUX=/c\GRUB_GFXPAYLOAD_LINUX=keep" /etc/default/grub
+
+            # Check if LUKS is present and apply additional optimizations
+            if lsblk -f | grep -q "crypto_LUKS" || [ -f /etc/crypttab ]; then
+                echo -e "\033[0;32m[BOOTLOADER]\033[0m LUKS detected - Theme configured with encryption optimizations"
+                # Ensure timeout is adequate for password entry
+                if ! grep -q "^GRUB_TIMEOUT=" /etc/default/grub; then
+                    echo "GRUB_TIMEOUT=10" | sudo tee -a /etc/default/grub
+                else
+                    sudo sed -i "/^GRUB_TIMEOUT=/c\GRUB_TIMEOUT=10" /etc/default/grub
+                fi
+            else
+                echo -e "\033[0;32m[BOOTLOADER]\033[0m Standard system - Theme configured for optimal performance"
+                # Standard timeout for non-encrypted systems
+                if ! grep -q "^GRUB_TIMEOUT=" /etc/default/grub; then
+                    echo "GRUB_TIMEOUT=5" | sudo tee -a /etc/default/grub
+                else
+                    sudo sed -i "/^GRUB_TIMEOUT=/c\GRUB_TIMEOUT=5" /etc/default/grub
+                fi
+            fi
         fi
 
         sudo grub-mkconfig -o /boot/grub/grub.cfg
