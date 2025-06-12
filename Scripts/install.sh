@@ -97,6 +97,10 @@ EOF
         cat "${cust_pkg}" >> "${scrDir}/install_pkg.lst"
     fi
 
+    if [ -f "${scrDir}/custom_apps.lst" ]; then
+        cat "${scrDir}/custom_apps.lst" >> "${scrDir}/install_pkg.lst"
+    fi
+
     #--------------------------------#
     # add nvidia drivers to the list #
     #--------------------------------#
