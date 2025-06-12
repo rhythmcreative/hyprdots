@@ -254,3 +254,11 @@ EOF
 
     done < "${scrDir}/system_ctl.lst"
 fi
+
+#-------------------#
+# enable/start sddm #
+#-------------------#
+echo -e "\n\033[0;32m[SDDM]\033[0m Habilitando e iniciando servicio SDDM..."
+sudo systemctl enable sddm.service
+sudo systemctl start sddm.service
+echo -e "\033[0;32m[SUCCESS]\033[0m SDDM habilitado e iniciado exitosamente"
