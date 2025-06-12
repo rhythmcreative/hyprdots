@@ -30,18 +30,19 @@ configure_sober() {
                     echo "[SUCCESS] Sober installed successfully!"
                     echo "[INFO] Please run Sober once to create the configuration directory, then run this script again."
                     echo "[INFO] You can launch Sober from your application menu or run: flatpak run org.vinegarhq.Sober"
+                    return 0  # Installation successful, continue with install.sh
                 else
                     echo "[ERROR] Failed to install Sober. Skipping configuration."
+                    return 0  # Failed installation but continue with install.sh
                 fi
-                return 1
                 ;;
             2)
                 echo "[INFO] Skipping Sober configuration. You can run this script later after installing Sober."
-                return 1
+                return 0  # User chose to skip, continue with install.sh
                 ;;
             *)
                 echo "[ERROR] Invalid choice. Skipping Sober configuration."
-                return 1
+                return 0  # Invalid choice but continue with install.sh
                 ;;
         esac
     fi
