@@ -14,7 +14,36 @@ configure_sober() {
     # Check if Sober config directory exists
     if [ ! -d "$SOBER_CONFIG_DIR" ]; then
         echo "[ERROR] Sober config directory not found: $SOBER_CONFIG_DIR"
-        return 1
+        echo "[INFO] Sober (Roblox) doesn't appear to be installed."
+        echo ""
+        echo "Choose an option:"
+        echo "1) Install Roblox (Sober) via Flatpak"
+        echo "2) Skip Sober configuration (you can configure it later)"
+        echo ""
+        read -p "Enter your choice (1 or 2): " choice
+        
+        case $choice in
+            1)
+                echo "[INFO] Installing Sober (Roblox) via Flatpak..."
+                flatpak install -y flathub org.vinegarhq.Sober
+                if [ $? -eq 0 ]; then
+                    echo "[SUCCESS] Sober installed successfully!"
+                    echo "[INFO] Please run Sober once to create the configuration directory, then run this script again."
+                    echo "[INFO] You can launch Sober from your application menu or run: flatpak run org.vinegarhq.Sober"
+                else
+                    echo "[ERROR] Failed to install Sober. Skipping configuration."
+                fi
+                return 1
+                ;;
+            2)
+                echo "[INFO] Skipping Sober configuration. You can run this script later after installing Sober."
+                return 1
+                ;;
+            *)
+                echo "[ERROR] Invalid choice. Skipping Sober configuration."
+                return 1
+                ;;
+        esac
     fi
     
     # Check if config.json exists
