@@ -59,10 +59,21 @@ detect_luks() {
     fi
 }
 
-# Function to download hyperfluent-arch theme
-download_theme() {
-    local theme_url="https://github.com/rhythmcreative/hyperfluent-grub-theme/archive/refs/heads/main.tar.gz"
+# Function to get hyperfluent-arch theme (local or download)
+get_theme() {
+    local local_theme="$scrDir/../Source/arcs/hyperfluent-arch.tar.gz"
     local theme_dir="$HOME/.cache/grub-theme"
+    
+    # Check if local theme exists first
+    if [ -f "$local_theme" ]; then
+        print_success "Using local hyperfluent-arch theme from $local_theme"
+        echo "$local_theme"
+        return 0
+    fi
+    
+    # Fallback to download if local file doesn't exist
+    print_status "Local theme not found, attempting to download..."
+    local theme_url="https://github.com/rhythmcreative/hyperfluent-grub-theme/archive/refs/heads/main.tar.gz"
     
     print_status "Creating cache directory..."
     mkdir -p "$theme_dir"
@@ -100,10 +111,19 @@ install_theme() {
     rm -rf "$temp_dir"
     mkdir -p "$temp_dir"
     
-    if tar -xzf "$theme_file" -C "$temp_dir" --strip-components=1 2>/dev/null; then
+    # Detect file type and extract accordingly
+    if file "$theme_file" | grep -q "Zip archive"; then
+        print_status "Detected ZIP archive format"
+        if unzip -q "$theme_file" -d "$temp_dir"; then
+            print_success "Theme extracted successfully"
+        else
+            print_error "Failed to extract ZIP theme"
+            exit 1
+        fi
+    elif tar -xzf "$theme_file" -C "$temp_dir" --strip-components=1 2>/dev/null; then
         print_success "Theme extracted successfully"
     else
-        print_error "Failed to extract theme"
+        print_error "Failed to extract theme (unsupported format)"
         exit 1
     fi
     
@@ -160,6 +180,17 @@ configure_grub() {
             echo "GRUB_ENABLE_CRYPTODISK=y" | sudo tee -a "$grub_config" > /dev/null
         else
             sudo sed -i 's/^GRUB_ENABLE_CRYPTODISK=.*/GRUB_ENABLE_CRYPTODISK=y/' "$grub_config"
+        fi
+        
+        # Configure preload modules for LUKS support
+        if grep -q "^GRUB_PRELOAD_MODULES=" "$grub_config"; then
+            # Check if crypto modules are already present
+            if ! grep "^GRUB_PRELOAD_MODULES=" "$grub_config" | grep -q "crypto"; then
+                # Add crypto modules to existing ones
+                sudo sed -i 's/^GRUB_PRELOAD_MODULES="\([^"]*\)"/GRUB_PRELOAD_MODULES="\1 crypto cryptodisk luks luks2"/' "$grub_config"
+            fi
+        else
+            echo 'GRUB_PRELOAD_MODULES="part_gpt part_msdos crypto cryptodisk luks luks2"' | sudo tee -a "$grub_config" > /dev/null
         fi
         
         # Set timeout for encrypted systems (give user time to see the theme)
@@ -259,7 +290,7 @@ EOF
     case "${1:-install}" in
         "install")
             print_status "Starting GRUB theme installation..."
-            theme_file=$(download_theme)
+            theme_file=$(get_theme)
             install_theme "$theme_file"
             configure_grub
             regenerate_grub
