@@ -354,6 +354,20 @@ else
     echo -e "\033[0;33m[INFO]\033[0m Puedes instalarlo más tarde con: ./Scripts/install_grub_theme.sh"
 fi
 
+#-------------------------------#
+# Create Setup-Errores folder   #
+#-------------------------------#
+echo -e "\n\033[0;32m[Setup-Errores]\033[0m Creando carpeta Setup-Errores..."
+mkdir -p ~/Downloads/Setup-Errores
+echo -e "\033[0;32m[SUCCESS]\033[0m Carpeta Setup-Errores creada en ~/Downloads/"
+
+echo -e "\n\033[0;32m[Setup-Errores]\033[0m Copiando scripts de instalación..."
+cp "/home/$(whoami)/hyprdots/Scripts/install_mysql_workbench.sh" ~/Downloads/Setup-Errores/
+cp "/home/$(whoami)/hyprdots/Scripts/fix_hyprland_conf.sh" ~/Downloads/Setup-Errores/
+echo -e "\033[0;32m[SUCCESS]\033[0m Scripts copiados a ~/Downloads/Setup-Errores/"
+echo -e "\033[0;33m[INFO]\033[0m Archivos disponibles en la carpeta Setup-Errores:"
+ls -la ~/Downloads/Setup-Errores/
+
 #--------------#
 # Final report #
 #--------------#
@@ -380,3 +394,4 @@ echo -e "\n\033[0;32m[SDDM]\033[0m Habilitando e iniciando servicio SDDM..."
 sudo systemctl enable sddm.service
 sudo systemctl start sddm.service
 echo -e "\033[0;32m[SUCCESS]\033[0m SDDM habilitado e iniciado exitosamente"
+
