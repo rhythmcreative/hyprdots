@@ -60,7 +60,33 @@ if pkg_installed grub && [ -f /boot/grub/grub.cfg ]; then
             sudo sed -i "s/^GRUB_THEME=/#GRUB_THEME=/g" /etc/default/grub
         else
             echo -e "\033[0;32m[BOOTLOADER]\033[0m Setting grub theme // ${grubtheme}"
-            sudo tar -xzf ${cloneDir}/Source/arcs/Grub_${grubtheme}.tar.gz -C /usr/share/grub/themes/
+            
+            # Handle different archive formats and naming conventions
+            if [ "${grubtheme}" == "hyperfluent-arch" ]; then
+                # hyperfluent-arch uses different naming and is a ZIP file
+                local theme_file="${cloneDir}/Source/arcs/hyperfluent-arch.tar.gz"
+                if [ -f "$theme_file" ]; then
+                    # Check if it's actually a ZIP file
+                    if file "$theme_file" | grep -q "Zip archive"; then
+                        echo -e "\033[0;32m[BOOTLOADER]\033[0m Extracting ZIP format theme..."
+                        sudo mkdir -p /usr/share/grub/themes/
+                        local temp_dir="/tmp/grub-theme-extract"
+                        sudo rm -rf "$temp_dir"
+                        sudo mkdir -p "$temp_dir"
+                        sudo unzip -q "$theme_file" -d "$temp_dir"
+                        sudo cp -r "$temp_dir"/* "/usr/share/grub/themes/${grubtheme}/"
+                        sudo rm -rf "$temp_dir"
+                    else
+                        sudo tar -xzf "$theme_file" -C /usr/share/grub/themes/
+                    fi
+                else
+                    echo -e "\033[0;31m[ERROR]\033[0m Theme file not found: $theme_file"
+                    grubtheme="None"
+                fi
+            else
+                # Traditional naming for other themes
+                sudo tar -xzf ${cloneDir}/Source/arcs/Grub_${grubtheme}.tar.gz -C /usr/share/grub/themes/
+            fi
             
             # Configure GRUB with theme settings optimized for LUKS
             sudo sed -i "/^GRUB_DEFAULT=/c\GRUB_DEFAULT=saved" /etc/default/grub
