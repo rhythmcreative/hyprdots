@@ -320,6 +320,10 @@ if [ ${flg_Service} -eq 1 ]; then
 |_ -| -_|  _| | | |  _| -_|_ -|
 |___|___|_|  \_/|_|___|___|___|
 
+EOF
+
+    "${scrDir}/install_svc.sh"
+fi
 
 #-------------------------#
 # install GRUB theme      #
