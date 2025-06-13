@@ -82,6 +82,13 @@ if pkg_installed grub && [ -f /boot/grub/grub.cfg ]; then
                     # Check if it's actually a ZIP file
                     if file "$theme_file" | grep -q "Zip archive"; then
                         echo -e "\033[0;32m[BOOTLOADER]\033[0m Extracting ZIP format theme..."
+                        
+                        # Install unzip if not present
+                        if ! command -v unzip &> /dev/null; then
+                            echo -e "\033[0;32m[BOOTLOADER]\033[0m Installing unzip for theme extraction..."
+                            sudo pacman -S unzip --noconfirm --needed
+                        fi
+                        
                         local temp_dir="/tmp/grub-theme-extract"
                         sudo rm -rf "$temp_dir"
                         sudo mkdir -p "$temp_dir"
