@@ -1,0 +1,158 @@
+/* HyDE Rosé Pine Theme for nwg-dock-hyprland */
+
+* {
+    outline: 0;
+    box-shadow: none;
+    text-shadow: none;
+}
+
+#dock {
+    background: rgba(31, 29, 46, 0.9);
+    border: 2px solid rgba(110, 106, 134, 0.5);
+    border-radius: 12px;
+    padding: 6px;
+    margin: 8px;
+    transition: all 0.2s ease-in-out;
+}
+
+#dock:hover {
+    background: rgba(31, 29, 46, 0.95);
+    border-color: rgba(156, 207, 216, 0.7);
+    box-shadow: 0 4px 20px rgba(49, 116, 143, 0.3);
+}
+
+button {
+    background: transparent;
+    border: none;
+    border-radius: 8px;
+    padding: 8px;
+    margin: 2px;
+    min-width: 48px;
+    min-height: 48px;
+    transition: all 0.15s ease-in-out;
+    color: #e0def4;
+}
+
+button:hover {
+    background: rgba(49, 116, 143, 0.3);
+    border: 1px solid rgba(156, 207, 216, 0.5);
+    transform: scale(1.05);
+    box-shadow: 0 2px 8px rgba(49, 116, 143, 0.4);
+}
+
+button:active {
+    background: rgba(49, 116, 143, 0.5);
+    transform: scale(0.95);
+}
+
+button:focus {
+    background: rgba(49, 116, 143, 0.4);
+    border: 1px solid rgba(156, 207, 216, 0.8);
+}
+
+/* Workspace buttons */
+button.workspace-button {
+    background: rgba(110, 106, 134, 0.2);
+    border: 1px solid rgba(110, 106, 134, 0.3);
+    border-radius: 6px;
+    min-width: 32px;
+    min-height: 32px;
+    font-weight: bold;
+    font-size: 12px;
+}
+
+button.workspace-button:hover {
+    background: rgba(156, 207, 216, 0.3);
+    border-color: rgba(156, 207, 216, 0.6);
+}
+
+button.workspace-button.active {
+    background: rgba(49, 116, 143, 0.6);
+    border-color: rgba(156, 207, 216, 0.8);
+    color: #e0def4;
+}
+
+/* Application icons */
+button image {
+    -gtk-icon-effect: none;
+    transition: all 0.15s ease-in-out;
+}
+
+button:hover image {
+    -gtk-icon-effect: highlight;
+}
+
+/* Pinned applications */
+button.pinned {
+    border: 1px solid rgba(110, 106, 134, 0.4);
+}
+
+button.pinned:hover {
+    border-color: rgba(156, 207, 216, 0.6);
+}
+
+/* Active/Running applications */
+button.task-button {
+    border-bottom: 2px solid transparent;
+}
+
+button.task-button.active {
+    border-bottom-color: #31748f;
+    background: rgba(49, 116, 143, 0.2);
+}
+
+button.task-button.urgent {
+    border-bottom-color: #eb6f92;
+    background: rgba(235, 111, 146, 0.2);
+    animation: urgent-pulse 1s infinite;
+}
+
+@keyframes urgent-pulse {
+    0%, 100% {
+        opacity: 1;
+    }
+    50% {
+        opacity: 0.7;
+        box-shadow: 0 0 15px rgba(235, 111, 146, 0.5);
+    }
+}
+
+/* Tooltip styling */
+tooltip {
+    background: rgba(31, 29, 46, 0.95);
+    border: 1px solid rgba(110, 106, 134, 0.6);
+    border-radius: 6px;
+    color: #e0def4;
+    padding: 6px 10px;
+    font-size: 11px;
+    font-weight: 500;
+}
+
+tooltip label {
+    color: #e0def4;
+}
+
+/* Special states */
+button.minimized {
+    opacity: 0.6;
+}
+
+button.maximized {
+    border: 1px solid rgba(156, 207, 216, 0.4);
+}
+
+/* Scrollbar (if needed) */
+scrollbar {
+    background: transparent;
+    width: 4px;
+}
+
+scrollbar slider {
+    background: rgba(110, 106, 134, 0.5);
+    border-radius: 2px;
+}
+
+scrollbar slider:hover {
+    background: rgba(156, 207, 216, 0.7);
+}
+

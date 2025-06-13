@@ -1,0 +1,88 @@
+{
+  "output": "",
+  "layer": "top",
+  "position": "bottom",
+  "height": 64,
+  "width": 0,
+  "margin-top": 0,
+  "margin-bottom": 8,
+  "margin-left": 8,
+  "margin-right": 8,
+  "spacing": 4,
+  "image-size": 48,
+  "icon-size": 16,
+  "hotspot-delay": 20,
+  "click-delay": 400,
+  "tooltip-delay": 1000,
+  "font-size": 12,
+  "font-family": "JetBrainsMono Nerd Font",
+  "exclusive": true,
+  "homogeneous": true,
+  "orientation": "horizontal",
+  "align": "center",
+  "icon-theme": "Papirus-Dark",
+  "css-name": "dock",
+  "items-padding": 4,
+  "angle": 0.0,
+  "gtk-theme": "Adwaita-dark",
+  "gtk-icon-theme": "Papirus-Dark",
+  "launcher-cmd": "rofi -show drun",
+  "wm-cmd": "hyprctl",
+  "workspace-numbers": false,
+  "workspace-nav": true,
+  "workspace-spacing": 0,
+  "workspace-names": [
+    "1",
+    "2",
+    "3",
+    "4",
+    "5",
+    "6",
+    "7",
+    "8",
+    "9",
+    "10"
+  ],
+  "pinned": [
+    {
+      "name": "Files",
+      "exec": "dolphin",
+      "icon": "system-file-manager"
+    },
+    {
+      "name": "Terminal",
+      "exec": "kitty",
+      "icon": "terminal"
+    },
+    {
+      "name": "Browser",
+      "exec": "firefox",
+      "icon": "firefox"
+    },
+    {
+      "name": "VS Code",
+      "exec": "code",
+      "icon": "code"
+    },
+    {
+      "name": "Settings",
+      "exec": "nwg-look",
+      "icon": "preferences-system"
+    }
+  ],
+  "controls": "workspaces",
+  "show-pinned": true,
+  "show-app-icon": true,
+  "show-app-name": false,
+  "show-app-name-special": true,
+  "resident": false,
+  "hot-spots": false,
+  "background-alpha": 0.9,
+  "background-color": "#1f1d2e",
+  "border-color": "#6e6a86",
+  "text-color": "#e0def4",
+  "focused-background-color": "#31748f",
+  "focused-border-color": "#9ccfd8",
+  "focused-text-color": "#e0def4"
+}
+
