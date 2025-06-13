@@ -66,7 +66,7 @@ get_theme() {
     
     # Check if local theme exists first
     if [ -f "$local_theme" ]; then
-        print_success "Using local hyperfluent-arch theme from $local_theme"
+        print_success "Using local hyperfluent-arch theme from $local_theme" >&2
         echo "$local_theme"
         return 0
     fi
@@ -112,18 +112,32 @@ install_theme() {
     mkdir -p "$temp_dir"
     
     # Detect file type and extract accordingly
-    if file "$theme_file" | grep -q "Zip archive"; then
+    local file_type=$(file "$theme_file")
+    print_status "File type: $file_type"
+    
+    if echo "$file_type" | grep -q "Zip archive"; then
         print_status "Detected ZIP archive format"
-        if unzip -q "$theme_file" -d "$temp_dir"; then
-            print_success "Theme extracted successfully"
+        if command -v unzip &> /dev/null; then
+            if unzip -q "$theme_file" -d "$temp_dir"; then
+                print_success "Theme extracted successfully (ZIP)"
+            else
+                print_error "Failed to extract ZIP theme"
+                exit 1
+            fi
         else
-            print_error "Failed to extract ZIP theme"
+            print_error "unzip command not found. Please install unzip."
             exit 1
         fi
-    elif tar -xzf "$theme_file" -C "$temp_dir" --strip-components=1 2>/dev/null; then
-        print_success "Theme extracted successfully"
+    elif echo "$file_type" | grep -q "gzip compressed data"; then
+        print_status "Detected tar.gz archive format"
+        if tar -xzf "$theme_file" -C "$temp_dir" --strip-components=1 2>/dev/null; then
+            print_success "Theme extracted successfully (tar.gz)"
+        else
+            print_error "Failed to extract tar.gz theme"
+            exit 1
+        fi
     else
-        print_error "Failed to extract theme (unsupported format)"
+        print_error "Failed to extract theme (unsupported format: $file_type)"
         exit 1
     fi
     
