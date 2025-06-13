@@ -335,17 +335,7 @@ EOF
     done < "${scrDir}/system_ctl.lst"
 fi
 
-#-------------------#
-# enable/start sddm #
-#-------------------#
-echo -e "\n\033[0;32m[MySQL Workbench]\033[0m Copiando install_mysql_workbench.sh..."
-cp "/home/$(whoami)/hyprdots/Scripts/install_mysql_workbench.sh" "/home/$(whoami)/Downloads/"
-echo -e "\033[0;32m[SUCCESS]\033[0m install_mysql_workbench.sh copiado a /home/$(whoami)/Downloads/"
 
-echo -e "\n\033[0;32m[SDDM]\033[0m Habilitando e iniciando servicio SDDM..."
-sudo systemctl enable sddm.service
-sudo systemctl start sddm.service
-echo -e "\033[0;32m[SUCCESS]\033[0m SDDM habilitado e iniciado exitosamente"
 
 #-------------------------#
 # install GRUB theme      #
@@ -389,3 +379,16 @@ echo -e "  - \033[0;36mhyprctl reload\033[0m: Recargar configuración de Hyprlan
 echo -e "  - \033[0;36mwaybar &\033[0m: Iniciar waybar manualmente"
 echo -e "  - \033[0;36mthemepatcher.sh\033[0m: Cambiar temas"
 echo -e "  - \033[0;36m./Scripts/install_grub_theme.sh uninstall\033[0m: Desinstalar tema GRUB"
+
+
+#-------------------#
+# enable/start sddm #
+#-------------------#
+echo -e "\n\033[0;32m[MySQL Workbench]\033[0m Copiando install_mysql_workbench.sh..."
+cp "/home/$(whoami)/hyprdots/Scripts/install_mysql_workbench.sh" "/home/$(whoami)/Downloads/"
+echo -e "\033[0;32m[SUCCESS]\033[0m install_mysql_workbench.sh copiado a /home/$(whoami)/Downloads/"
+
+echo -e "\n\033[0;32m[SDDM]\033[0m Habilitando e iniciando servicio SDDM..."
+sudo systemctl enable sddm.service
+sudo systemctl start sddm.service
+echo -e "\033[0;32m[SUCCESS]\033[0m SDDM habilitado e iniciado exitosamente"
