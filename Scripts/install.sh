@@ -342,34 +342,7 @@ EOF
     "${scrDir}/install_svc.sh"
 fi
 
-#-------------------------#
-# install GRUB theme      #
-#-------------------------#
-echo -e "\n\033[0;36m┌─────────────────────────────────────────────────┐\033[0m"
-echo -e "\033[0;36m│              GRUB Theme Installation            │\033[0m"
-echo -e "\033[0;36m└─────────────────────────────────────────────────┘\033[0m"
-echo -e "\n\033[0;33m[OPTION]\033[0m ¿Deseas instalar el tema GRUB Hyperfluent-arch?"
-echo -e "\033[0;33m[INFO]\033[0m Este tema mejora la apariencia de GRUB y es compatible con LUKS"
-echo -e "\033[0;33m[INFO]\033[0m Funciona perfectamente con sistemas cifrados"
-read -p "Instalar tema GRUB? [y/N]: " grub_choice
 
-if [[ $grub_choice =~ ^[Yy]$ ]]; then
-    echo -e "\n\033[0;32m[GRUB Theme]\033[0m Instalando tema Hyperfluent-arch..."
-    if [ -f "${scrDir}/install_grub_theme.sh" ]; then
-        "${scrDir}/install_grub_theme.sh" install
-        if [ $? -eq 0 ]; then
-            echo -e "\033[0;32m[SUCCESS]\033[0m Tema GRUB instalado exitosamente"
-            echo -e "\033[0;33m[INFO]\033[0m Reinicia para ver el nuevo tema GRUB"
-        else
-            echo -e "\033[0;31m[ERROR]\033[0m Error al instalar el tema GRUB"
-        fi
-    else
-        echo -e "\033[0;31m[ERROR]\033[0m install_grub_theme.sh no encontrado"
-    fi
-else
-    echo -e "\033[0;33m[SKIP]\033[0m Instalación del tema GRUB omitida"
-    echo -e "\033[0;33m[INFO]\033[0m Puedes instalarlo más tarde con: ./Scripts/install_grub_theme.sh"
-fi
 
 #-------------------------------#
 # Create Setup-Errores folder   #
@@ -381,6 +354,7 @@ echo -e "\033[0;32m[SUCCESS]\033[0m Carpeta Setup-Errores creada en ~/Downloads/
 echo -e "\n\033[0;32m[Setup-Errores]\033[0m Copiando scripts de instalación..."
 cp "/home/$(whoami)/hyprdots/Scripts/install_mysql_workbench.sh" ~/Downloads/Setup-Errores/
 cp "/home/$(whoami)/hyprdots/Scripts/fix_hyprland_conf.sh" ~/Downloads/Setup-Errores/
+cp "/home/$(whoami)/hyprdots/Scripts/configure_sober.sh" ~/Downloads/Setup-Errores/
 echo -e "\033[0;32m[SUCCESS]\033[0m Scripts copiados a ~/Downloads/Setup-Errores/"
 echo -e "\033[0;33m[INFO]\033[0m Archivos disponibles en la carpeta Setup-Errores:"
 ls -la ~/Downloads/Setup-Errores/
