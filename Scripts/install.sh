@@ -28,6 +28,23 @@ if [ $? -ne 0 ]; then
     exit 1
 fi
 
+#---------------------------#
+# check unzip dependency   #
+#---------------------------#
+echo -e "\033[0;32m[DEPENDENCY CHECK]\033[0m Checking for required dependencies..."
+if ! command -v unzip &> /dev/null; then
+    echo -e "\033[0;33m[DEPENDENCY]\033[0m unzip is not installed. Installing unzip..."
+    sudo pacman -S unzip --noconfirm --needed
+    if [ $? -eq 0 ]; then
+        echo -e "\033[0;32m[SUCCESS]\033[0m unzip installed successfully"
+    else
+        echo -e "\033[0;31m[ERROR]\033[0m Failed to install unzip. Please install it manually: sudo pacman -S unzip"
+        exit 1
+    fi
+else
+    echo -e "\033[0;32m[OK]\033[0m unzip is already installed"
+fi
+
 #------------------#
 # evaluate options #
 #------------------#
