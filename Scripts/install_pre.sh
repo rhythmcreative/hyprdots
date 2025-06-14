@@ -74,7 +74,7 @@ if pkg_installed grub && [ -f /boot/grub/grub.cfg ]; then
             else
                 echo -e "\033[0;31m[ERROR]\033[0m install_grub_theme.sh not found, falling back to manual installation"
                 # Fallback to manual installation
-                local theme_file="${cloneDir}/Source/arcs/hyperfluent-arch.tar.gz"
+                theme_file="${cloneDir}/Source/arcs/hyperfluent-arch.tar.gz"
                 if [ -f "$theme_file" ]; then
                     echo -e "\033[0;32m[BOOTLOADER]\033[0m Installing theme manually..."
                     sudo mkdir -p /usr/share/grub/themes/
@@ -89,7 +89,7 @@ if pkg_installed grub && [ -f /boot/grub/grub.cfg ]; then
                             sudo pacman -S unzip --noconfirm --needed
                         fi
                         
-                        local temp_dir="/tmp/grub-theme-extract"
+                        temp_dir="/tmp/grub-theme-extract"
                         sudo rm -rf "$temp_dir"
                         sudo mkdir -p "$temp_dir"
                         sudo unzip -q "$theme_file" -d "$temp_dir"
