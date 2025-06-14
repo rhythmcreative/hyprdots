@@ -171,49 +171,59 @@ EOF
     sudo pacman -S python-webcolors --noconfirm || echo -e "\033[0;33m[SKIP]\033[0m python-webcolors may already be installed"
     
     #------------------------------#
-    # detect ASUS laptop and ROG Control Center #
+    # ROG Control Center installation option #
     #------------------------------#
-    echo -e "\n\033[0;32m[ASUS Detection]\033[0m Checking for ASUS hardware..."
+    echo -e "\n\033[0;32m[ROG Control Center]\033[0m ROG Control Center installation option"
+    echo -e "\033[0;33mROG Control Center provides:\033[0m"
+    echo -e "  • RGB lighting control"
+    echo -e "  • Fan curve management"
+    echo -e "  • Performance profiles"
+    echo -e "  • Aura sync support"
+    echo -e "  • Keyboard backlight control"
+    echo ""
     
-    # Check if it's an ASUS system
-    if sudo dmidecode -s system-manufacturer 2>/dev/null | grep -i "asus" >/dev/null 2>&1 || \
-       sudo dmidecode -s system-product-name 2>/dev/null | grep -i "rog\|tuf\|zenbook\|vivobook\|asus" >/dev/null 2>&1; then
-        
-        echo -e "\033[0;32m✓ ASUS system detected!\033[0m"
-        echo -e "\033[0;33mDetected ASUS hardware. ROG Control Center provides:\033[0m"
-        echo -e "  • RGB lighting control"
-        echo -e "  • Fan curve management"
-        echo -e "  • Performance profiles"
-        echo -e "  • Aura sync support"
-        echo ""
-        
-        # Ask user if they want to install ROG Control Center
-        while true; do
-            read -p "Do you want to install ROG Control Center? [Y/n]: " rog_choice
-            case ${rog_choice:-Y} in
-                [Yy]* )
-                    echo -e "\033[0;32m[ROG Control Center]\033[0m Installing ROG Control Center..."
+    # Ask user if they want to install ROG Control Center
+    while true; do
+        read -p "¿Deseas instalar ROG Control Center? [S/n]: " rog_choice
+        case ${rog_choice:-S} in
+            [SsYy]* )
+                echo -e "\033[0;32m[ROG Control Center]\033[0m Instalando ROG Control Center..."
+                echo -e "\033[0;33m[INFO]\033[0m Esto puede tomar unos minutos..."
+                
+                # Check if AUR helper is available
+                if command -v yay &> /dev/null; then
                     yay -S rog-control-center --noconfirm
-                    if [ $? -eq 0 ]; then
-                        echo -e "\033[0;32m✓ ROG Control Center installed successfully\033[0m"
-                        echo -e "\033[0;33mTip: You can access it from the applications menu or run 'rog-control-center'\033[0m"
-                    else
-                        echo -e "\033[0;31m✗ Error installing ROG Control Center\033[0m"
-                    fi
+                elif command -v paru &> /dev/null; then
+                    paru -S rog-control-center --noconfirm
+                else
+                    echo -e "\033[0;31m[ERROR]\033[0m No se encontró un helper de AUR (yay/paru)"
+                    echo -e "\033[0;33m[INFO]\033[0m Intenta instalar manualmente: yay -S rog-control-center"
                     break
-                    ;;
-                [Nn]* )
-                    echo -e "\033[0;33m[SKIP]\033[0m ROG Control Center installation skipped"
-                    break
-                    ;;
-                * )
-                    echo "Please answer yes (Y/y) or no (N/n)"
-                    ;;
-            esac
-        done
-    else
-        echo -e "\033[0;33m[INFO]\033[0m Non-ASUS system detected, skipping ROG Control Center"
-    fi
+                fi
+                
+                if [ $? -eq 0 ]; then
+                    echo -e "\033[0;32m✓ ROG Control Center instalado exitosamente\033[0m"
+                    echo -e "\033[0;33m[ACCESO]\033[0m Puedes acceder desde:"
+                    echo -e "  • Menú de aplicaciones"
+                    echo -e "  • Terminal: \033[0;36mrog-control-center\033[0m"
+                    echo -e "  • Super + R y escribir 'rog-control-center'"
+                else
+                    echo -e "\033[0;31m✗ Error al instalar ROG Control Center\033[0m"
+                    echo -e "\033[0;33m[SOLUCIÓN]\033[0m Puedes instalarlo manualmente después con:"
+                    echo -e "  \033[0;36myay -S rog-control-center\033[0m"
+                fi
+                break
+                ;;
+            [Nn]* )
+                echo -e "\033[0;33m[OMITIDO]\033[0m Instalación de ROG Control Center omitida"
+                echo -e "\033[0;33m[INFO]\033[0m Puedes instalarlo más tarde con: \033[0;36myay -S rog-control-center\033[0m"
+                break
+                ;;
+            * )
+                echo -e "\033[0;31mPor favor responde Sí (S/s) o No (N/n)\033[0m"
+                ;;
+        esac
+    done
 fi
 
 #-----------------------------#
